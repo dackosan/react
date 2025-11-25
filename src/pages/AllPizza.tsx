@@ -9,7 +9,9 @@ const AllPizza = () => {
   const navigate = useNavigate();
 
   const [pizzak, setPizzak] = useState<Array<Pizza>>([]);
-  const [kosar, setKosar] = useState<Array<number>>(JSON.parse(localStorage.getItem("kosar") ?? "[]"));
+  const [kosar, setKosar] = useState<Array<number>>(
+    JSON.parse(localStorage.getItem("kosar") ?? "[]")
+  );
 
   useEffect(() => {
     apiClient
@@ -39,7 +41,6 @@ const AllPizza = () => {
             <Button
               onClick={() => {
                 setKosar([...kosar, Number(p.id)]);
-                localStorage.setItem("kosar", p.nev);
                 toast.success("Sikeresen berakta a korsárba!");
               }}
               variant="info"

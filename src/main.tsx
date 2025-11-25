@@ -8,6 +8,7 @@ import NewPizza from "./pages/NewPizza";
 import EditPizza from "./pages/EditPizza";
 import NotFoundPage from "./pages/errors/NotFoundPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Kosar from "./pages/Kosar";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/pizza/:id" element={<OnePizza />} />
         <Route path="/edit-pizza/:id" element={<EditPizza />} />
         <Route path="/new-pizza" element={<NewPizza />} />
+        <Route path="/kosar" element={<Kosar />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
