@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import type { Pizza } from "../types/Pizza";
 import apiClient from "../api/apiClient";
 import { toast } from "react-toastify";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Kosar = () => {
   const [pizzak, setPizzak] = useState<Array<Pizza>>([]);
   const [kosar, setKosar] = useState<Array<number>>(
     JSON.parse(localStorage.getItem("kosar") ?? "[]")
   );
-  const [sum, setSum] = useState<number>(0);
 
   useEffect(() => {
     apiClient
@@ -18,6 +18,14 @@ const Kosar = () => {
       .catch(() => toast.error("A pizzák betöltése sikertelen volt"));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("kosar", JSON.stringify(kosar));
+  }, [kosar]);
+
+  const removeItem = (index: number) => {
+    setKosar(kosar.filter((v, i) => i !== index));
+  };
+
   return (
     <Table>
       <thead>
@@ -25,24 +33,24 @@ const Kosar = () => {
         <th>Ár</th>
       </thead>
       <tbody>
-        {kosar.map((id) => {
+        {kosar.map((id, index) => {
           const pizza = pizzak.find((p) => p.id === id);
-
-          if (pizza?.ar) {
-            setSum(sum + Number(pizza?.ar));
-          }
-
           return (
             <tr>
               <td>{pizza?.nev}</td>
               <td>{pizza?.ar}</td>
+              <td>
+                <Button variant="danger" onClick={() => removeItem(index)}>
+                  <FaTrashAlt />
+                </Button>
+              </td>
             </tr>
           );
         })}
       </tbody>
       <tfoot>
         <th></th>
-        <th>{sum}</th>
+        <th>{}</th>
       </tfoot>
     </Table>
   );
